@@ -1,6 +1,5 @@
 # docker-compose.yml — ViciDial mit ConfBridge (Docker Hub Images)
 # Einfach: docker compose up -d — fertig.
-version: "3.8"
 
 services:
   mariadb:
