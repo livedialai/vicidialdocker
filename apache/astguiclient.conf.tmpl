@@ -1,0 +1,43 @@
+# astguiclient.conf — Template, __VAR__ werden vom Entrypoint ersetzt
+
+PATHhome => /usr/share/astguiclient
+PATHlogs => /var/log/astguiclient
+PATHagi => /var/lib/asterisk/agi-bin
+PATHweb => /var/www/html
+PATHsounds => /var/lib/asterisk/sounds
+PATHmonitor => /var/spool/asterisk/monitor
+PATHDONEmonitor => /var/spool/asterisk/monitorDONE
+
+VARserver_ip => __SERVER_IP__
+VARDB_server => __DB_HOST__
+VARDB_database => asterisk
+VARDB_user => cron
+VARDB_pass => 1234
+VARDB_custom_user => custom
+VARDB_custom_pass => custom1234
+VARDB_port => __DB_PORT__
+
+VARactive_keepalives => 12345689EC
+VARasterisk_version => 18.X
+
+VARFTP_host => 10.0.0.4
+VARFTP_user => cron
+VARFTP_pass => test
+VARFTP_port => 21
+VARFTP_dir => RECORDINGS
+VARHTTP_path => http://10.0.0.4
+VARREPORT_host => 10.0.0.4
+VARREPORT_user => cron
+VARREPORT_pass => test
+VARREPORT_port => 21
+VARREPORT_dir => REPORTS
+
+VARfastagi_log_min_servers => 3
+VARfastagi_log_max_servers => 16
+VARfastagi_log_min_spare_servers => 2
+VARfastagi_log_max_spare_servers => 8
+VARfastagi_log_max_requests => 1000
+VARfastagi_log_checkfordead => 30
+VARfastagi_log_checkforwait => 60
+
+ExpectedDBSchema => 1720

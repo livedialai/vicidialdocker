@@ -1,0 +1,65 @@
+# docker-compose.yml — ViciDial mit ConfBridge (Docker Hub Images)
+# Einfach: docker compose up -d — fertig.
+version: "3.8"
+
+services:
+  mariadb:
+    image: livedial/vicidial-db:latest
+    container_name: vicidial-db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: vicidial
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/60-vicidial.cnf:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  asterisk:
+    image: livedial/vicidial-asterisk:latest
+    container_name: vicidial-asterisk
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+      - "10000-10100:10000-10100/udp"
+    volumes:
+      - asterisk-sounds:/var/lib/asterisk/sounds
+      - asterisk-monitor:/var/spool/asterisk
+      - asterisk-config:/etc/asterisk
+    environment:
+      - ASTERISK_DB_HOST=mariadb
+      - ASTERISK_DB_USER=cron
+      - ASTERISK_DB_PASS=1234
+      - ASTERISK_DB_NAME=asterisk
+
+  apache:
+    image: livedial/vicidial-apache:latest
+    container_name: vicidial-apache
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+      - asterisk
+    ports:
+      - "80:80"
+    volumes:
+      - asterisk-monitor:/var/spool/asterisk:ro
+      - asterisk-sounds:/var/lib/asterisk/sounds:ro
+    environment:
+      - SERVER_IP=${SERVER_IP:-127.0.0.1}
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+
+volumes:
+  db-data:
+  asterisk-sounds:
+  asterisk-monitor:
+  asterisk-config:
