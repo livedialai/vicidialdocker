@@ -48,7 +48,7 @@ services:
       - mariadb
       - asterisk
     ports:
-      - "80:80"
+      - "3300:80"
     volumes:
       - asterisk-monitor:/var/spool/asterisk:ro
       - asterisk-sounds:/var/lib/asterisk/sounds:ro

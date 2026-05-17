@@ -25,8 +25,8 @@ docker compose up -d
 docker compose logs -f apache
 
 # 4. Fertig
-# Admin:  http://DEINE_IP/vicidial/admin.php  (6666 / 1234)
-# Agent:  http://DEINE_IP/vicidial/agc/vicidial.php
+# Admin:  http://DEINE_IP:3300/vicidial/admin.php  (6666 / 1234)
+# Agent:  http://DEINE_IP:3300/vicidial/agc/vicidial.php
 ```
 
 ## 📦 Docker Hub Images
@@ -57,7 +57,7 @@ docker compose logs -f apache
 docker compose up -d
 ├── vicidial-db        (MariaDB 10.11, Port 3306)
 ├── vicidial-asterisk  (Asterisk 18.18.1 + ViciDial-Patches, PJSIP, ConfBridge)
-└── vicidial-apache    (Apache + PHP 7.4 + astguiclient, Port 80)
+└── vicidial-apache    (Apache + PHP 7.4 + astguiclient, Port 3300)
 ```
 
 - **Asterisk 18.18.1** mit ViciDial-Patches
